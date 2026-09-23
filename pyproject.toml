@@ -1,0 +1,33 @@
+[project]
+name = "vbody"
+version = "0.3.0"
+description = "Position error of an SO-ARM101 measured against a ChArUco board with its wrist camera, a model of that arm fitted from it, and the correction the model gives"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "opencv-python-headless>=4.8",
+    "mujoco>=3.0",
+]
+
+[project.optional-dependencies]
+# The Feetech serial bus SDK. The distribution is feetech-servo-sdk; the
+# module it installs, and the one vbody/arm.py imports, is scservo_sdk.
+real = ["feetech-servo-sdk>=1.0.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+vbody = "vbody.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["vbody*"]
+
+[tool.setuptools.package-data]
+"vbody" = ["assets/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
